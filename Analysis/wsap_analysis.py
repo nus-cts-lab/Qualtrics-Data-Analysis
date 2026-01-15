@@ -2,6 +2,14 @@ import pandas as pd
 import numpy as np
 import os
 
+# Create results directory
+results_dir = "wsap_analysis_results"
+os.makedirs(results_dir, exist_ok=True)
+
+# Read the Excel file
+# Rename accordingly
+file_name = "1_values_excel.xlsx"
+df = pd.read_excel(file_name, header=0, skiprows=[1, 2])
 def safe_parse_comma_data(data_str, data_type='str'):
     """
     Safely parse comma-separated data, handling empty values and type conversion
@@ -58,13 +66,6 @@ def create_trial_dataframe(responses, rts, scenario_types, word_types=None):
     
     return pd.DataFrame(trial_data)
 
-# Create results directory
-results_dir = "wsap_analysis_results"
-os.makedirs(results_dir, exist_ok=True)
-
-# Read the Excel file
-file_name = "1_values_excel.xlsx"
-df = pd.read_excel(file_name, header=0, skiprows=[1, 2])
 
 # ============================================================================
 # PART 1: ORIGINAL WSAP ANALYSIS (Columns DO-DT)

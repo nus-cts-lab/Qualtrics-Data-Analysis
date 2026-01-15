@@ -7,6 +7,7 @@ results_dir = "questionnaire_analysis_results"
 os.makedirs(results_dir, exist_ok=True)
 
 # Read the Excel file
+# Rename accordingly
 file_name = "1_labels_excel.xlsx"
 df = pd.read_excel(file_name, header=0, skiprows=[1, 2])
 

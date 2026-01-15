@@ -10,6 +10,7 @@ os.makedirs(results_dir, exist_ok=True)
 # Rename accordingly
 file_name = "1_values_excel.xlsx"
 df = pd.read_excel(file_name, header=0, skiprows=[1, 2])
+
 def safe_parse_comma_data(data_str, data_type='str'):
     """
     Safely parse comma-separated data, handling empty values and type conversion

@@ -1,14 +1,8 @@
 import pandas as pd
 import numpy as np
-import os
 
-# Create results directory
-results_dir = "wsap_analysis_results"
-os.makedirs(results_dir, exist_ok=True)
-
-# Read the Excel file
-# Rename accordingly
-file_name = "1_values_excel.xlsx"
+# Read the Excel file from parent directory
+file_name = "../1_values_excel.xlsx"
 df = pd.read_excel(file_name, header=0, skiprows=[1, 2])
 
 def safe_parse_comma_data(data_str, data_type='str'):
@@ -413,7 +407,7 @@ new_summary_df = pd.DataFrame(new_summary_data)
 # EXPORT RESULTS TO EXCEL
 # ============================================================================
 
-output_file = os.path.join(results_dir, "wsap_complete_analysis.xlsx")
+output_file = "wsap_complete_analysis.xlsx"
 
 # Write to Excel with multiple sheets
 with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
@@ -432,17 +426,17 @@ with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
 # Export DDM-ready datasets
 if original_ddm_data:
     original_ddm_combined = pd.concat(original_ddm_data, ignore_index=True)
-    ddm_file = os.path.join(results_dir, "original_wsap_ddm_data.csv")
+    ddm_file = "original_wsap_ddm_data.csv"
     original_ddm_combined.to_csv(ddm_file, index=False)
 
 if new_ddm_data:
     new_ddm_combined = pd.concat(new_ddm_data, ignore_index=True)
-    ddm_file = os.path.join(results_dir, "new_wsap_ddm_data.csv")
+    ddm_file = "new_wsap_ddm_data.csv"
     new_ddm_combined.to_csv(ddm_file, index=False)
 
 # Export data quality report
 quality_report = combined_df[['ResponseId', 'Original_Data_Quality', 'New_Data_Quality']].copy()
-quality_file = os.path.join(results_dir, "wsap_data_quality_report.csv")
+quality_file = "wsap_data_quality_report.csv"
 quality_report.to_csv(quality_file, index=False)
 
 print(f"WSAP analysis complete. Results saved to: {output_file}")

@@ -1,14 +1,8 @@
 import pandas as pd
 import numpy as np
-import os
 
-# Create results directory
-results_dir = "questionnaire_analysis_results"
-os.makedirs(results_dir, exist_ok=True)
-
-# Read the Excel file
-# Rename accordingly
-file_name = "1_labels_excel.xlsx"
+# Read the Excel file from parent directory
+file_name = "../1_labels_excel.xlsx"
 df = pd.read_excel(file_name, header=0, skiprows=[1, 2])
 
 # ============================================================================
@@ -360,7 +354,7 @@ masq_summary_df = pd.DataFrame(masq_summary_data)
 # EXPORT RESULTS TO EXCEL
 # ============================================================================
 
-output_file = os.path.join(results_dir, "questionnaire_analysis_results.xlsx")
+output_file = "questionnaire_analysis_results.xlsx"
 
 # Write to Excel with multiple sheets
 with pd.ExcelWriter(output_file, engine='openpyxl') as writer:

@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Read the Excel file from parent directory
-file_name = "../1_labels_excel.xlsx"
+file_name = "../1_values_excel.xlsx"
 df = pd.read_excel(file_name, header=0, skiprows=[1, 2])
 
 # ============================================================================

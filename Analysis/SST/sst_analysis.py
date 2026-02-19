@@ -8,7 +8,9 @@ df = pd.read_excel(file_name, header=0, skiprows=[1, 2])
 # ============================================================================
 # SST ANALYSIS - Negativity Score Calculation
 # ============================================================================
-# Formula: Negativity score = Total negative sentences / Total correctly formed sentences
+# Formula: Negativity score = Total negative sentences / (Total negative + Total positive sentences)
+# Mixed and unclear sentences are excluded from both numerator and denominator
+# Participants where mixed > (positive + negative) are excluded
 # For anxiety and depression stimuli only
 
 sst_results = []
@@ -47,10 +49,29 @@ for idx, row in df.iterrows():
     mixed_count = interpretations.count('mixed')
     unclear_count = interpretations.count('unclear')
 
+    # Exclude participant if mixed > total positive + negative
+    valid_denominator = positive_count + total_negative_count
+    if mixed_count > valid_denominator:
+        sst_results.append({
+            'ResponseId': participant_id,
+            'List_Assignment': list_assignment,
+            'Total_Completed_Sentences': main_total_completed,
+            'Negative_D_Count': negative_d_count,
+            'Negative_GA_Count': negative_ga_count,
+            'Total_Negative_Count': total_negative_count,
+            'Positive_Count': positive_count,
+            'Mixed_Count': mixed_count,
+            'Unclear_Count': unclear_count,
+            'Negativity_Score': np.nan,
+            'Data_Quality': f"Excluded: Mixed ({mixed_count}) > Positive + Negative ({valid_denominator})"
+        })
+        continue
+
     # Calculate negativity score
-    # Negativity score = Total negative sentences / Total correctly formed sentences
-    if main_total_completed > 0:
-        negativity_score = total_negative_count / main_total_completed
+    # Negativity score = Total negative sentences / (Total negative + Total positive)
+    # Mixed and unclear sentences are excluded from both numerator and denominator
+    if valid_denominator > 0:
+        negativity_score = total_negative_count / valid_denominator
     else:
         negativity_score = np.nan
 
